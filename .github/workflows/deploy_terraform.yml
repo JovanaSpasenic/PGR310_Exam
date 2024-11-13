@@ -28,14 +28,14 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
-        working-directory: eksamen-2024/infra
+        working-directory: infra
 
       - name: Terraform Plan (for non-main branches)
         if: github.ref != 'refs/heads/main'
         run: terraform plan
-        working-directory: eksamen-2024/infra
+        working-directory: infra
 
       - name: Terraform Apply (for main branch)
         if: github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve
-        working-directory: eksamen-2024/infra
+        working-directory: infra
