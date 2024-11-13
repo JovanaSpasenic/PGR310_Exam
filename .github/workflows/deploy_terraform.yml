@@ -28,7 +28,7 @@ jobs:
         
       - name: Terraform Init
         run: terraform init
-        working-directory: infra
+        working-directory: eksamen-2024/infra
 
       - name: Terraform Plan (for ikke-main branches)
         if: github.ref != 'refs/heads/main'
