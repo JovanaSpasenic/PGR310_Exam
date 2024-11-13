@@ -3,5 +3,6 @@ output "lambda_function_arn" {
 }
 
 output "sqs_queue_url" {
-  value = aws_sqs_queue.image_queue.url
+  value = aws_sqs_queue.image_queue_82.url
 }
+

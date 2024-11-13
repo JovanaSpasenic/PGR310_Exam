@@ -4,7 +4,7 @@ import json
 import random
 
 # Set up the AWS clients
-
+KANDIDATNUMMER= 82
 bedrock_client = boto3.client("bedrock-runtime", region_name="us-east-1")
 s3_client = boto3.client("s3")
 
