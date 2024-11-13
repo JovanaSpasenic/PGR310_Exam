@@ -11,8 +11,8 @@ seed = int(time.time())
 
 def lambda_handler(event, context):
     for record in event['Records']:
-        # Hent meldingen fra SQS queue
     
+     
         message_body = record ['body']
         print(f"Processing message: {message_body}")
 
