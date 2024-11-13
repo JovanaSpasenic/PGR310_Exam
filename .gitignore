@@ -1,0 +1,29 @@
+# Virtuelt miljø
+.venv/
+env/
+venv/
+
+.idea/
+.c9/
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+dist/
+
+.DS_Store
+.env
+*.log
+
+*.zip
+*.tar
+infra/.terraform/
+
+
+
