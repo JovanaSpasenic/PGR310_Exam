@@ -13,7 +13,7 @@ WORKDIR /app
 COPY --from=builder /app/target/*.jar /app/application.jar
 ENTRYPOINT ["java", "-jar", "/app/application.jar"]
 
-# Sett miljøvariabler ??
+# miljøvariabler
 ENV SQS_QUEUE_URL="https://sqs.eu-west-1.amazonaws.com/244530008913/image-queue_82"
 
 
