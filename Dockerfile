@@ -4,7 +4,7 @@
 FROM maven:3.8-eclipse-temurin-17 as builder
 WORKDIR /app
 COPY pom.xml .
-COPY src ./src
+COPY src ./java_sqs_client/src
 RUN mvn package
 
 # Use a base image with Java 17 --> Fra Lab øvingene
