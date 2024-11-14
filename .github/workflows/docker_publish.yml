@@ -35,10 +35,3 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/java_sqs_client:${{ env.COMMIT_SHA }}
-
-      # Alternativ: Tagge Docker-imaget som "latest" for enkel testing (valgfritt)
-      - name: Tag as latest (optional)
-        if: github.ref == 'refs/heads/main'  # Bare gjør dette på hovedgrenen
-        run: |
-          docker tag ${{ secrets.DOCKER_USERNAME }}/java_sqs_client:${{ env.COMMIT_SHA }} ${{ secrets.DOCKER_USERNAME }}/java_sqs_client:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/java_sqs_client:latest
