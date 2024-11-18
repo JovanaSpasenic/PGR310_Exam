@@ -12,7 +12,7 @@ resource "aws_cloudwatch_metric_alarm" "sqs_oldest_message_age_alarm" {
   statistic           = "Maximum"
   period              = 60  # hvert minutt --> måling
   evaluation_periods  = 2 # Andre gangen betingelsen oppfyles trigges alarmen
-  threshold           = 300  # trigger alarmen hvis den eldste meldingen er 120 sekunder (2 minutter)
+  threshold           = 30  # trigger alarmen hvis den eldste meldingen er 30sekunder 
   comparison_operator = "GreaterThanThreshold"
   alarm_actions       = [aws_sns_topic.sqs_alarm_topic.arn]
   ok_actions          = [aws_sns_topic.sqs_alarm_topic.arn]

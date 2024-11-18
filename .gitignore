@@ -10,6 +10,7 @@ venv/
 *.tfstate.backup
 .terraform.lock.hcl
 
+
 # Python
 __pycache__/
 *.pyc
@@ -25,5 +26,9 @@ dist/
 *.tar
 infra/.terraform/
 
+terraform.tfvars
+
+
+*.tfvars.json
 
 

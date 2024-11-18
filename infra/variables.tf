@@ -19,5 +19,5 @@ variable "sqs_queue_name" {
 variable "lambda_role_name" {
   description = "Name of the IAM role for Lambda"
   type        = string
-  default     = "lambda-sqs-role"
+  default     = "lambda-sqs-role-82"
 }

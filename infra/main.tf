@@ -48,7 +48,7 @@ resource "aws_iam_role" "lambda_role" {
 }
 
 resource "aws_iam_policy" "lambda_sqs_policy" {
-  name        = "lambda-sqs-policy"
+  name        = "lambda-sqs-policy-82"
   description = "Policy for Lambda to access SQS, S3, and CloudWatch Logs"
 
   policy = jsonencode({

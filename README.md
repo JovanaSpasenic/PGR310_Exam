@@ -34,26 +34,20 @@ sqs_queue_url = "https://sqs.eu-west-1.amazonaws.com/244530008913/image-queue_82
 
 ## OPPGAVE 3 A og B
 
-Til meg selv husk:
-- må laste ned mvn først før mvn package!
-- echo $COMMIT_SHA --> Sjekke om det er commit som er lagt til med SHA hash ????
-- export COMMIT_SHA=$(git rev-parse --short HEAD) --> Dette vil bruke den korte SHA-verdien for den nåværende Git-commiten som tag for Docker-bildet.
-- 
-
 #### Beskrivelse av taggestrategi: Forklar kort hvordan du har valgt å tagge container imagene dine, og gi en begrunnelse for denne strategien:
-
-Jeg har valgt å tagge Docker-imagene med SHA-hashen fra committen som trigget GitHub Actions workflowen. Dette gir en unik tag for hvert build, knyttet til den spesifikke committen. 
-Denne strategien gir teamet bedre kontroll og synlighet over versjoner, og gjør det lettere å samarbeide på tvers av ulike miljøer.
+Jeg har valgt å tagge Docker-imagene med latest, som representerer den nyeste stabile versjonen av applikasjonen. Denne strategien er valgt for å sikre at alle miljøer alltid bruker den nyeste versjonen av imaget uten behov for å spesifisere en konkret tag
 
 Fordeler:
-- Sporbarhet: Hver tag er knyttet til en spesifikk commit, som gjør det enkelt å identifisere hvilken versjon av koden som er bygget.
-- Feilsøking: Med SHA-basert tagging kan teammedlemmer enkelt spore tilbake til en spesifikk commit ved problemer.
-- Effektivt teamarbeid: Denne tilnærmingen sikrer at alle i teamet jobber med den eksakte versjonen av applikasjonen, og gjør samarbeid og feilsøking mer effektivt.
+- Enkelhet: Bruken av latest gjør det lettere å administrere imagene, da man alltid refererer til den nyeste versjonen av applikasjonen uten å måtte holde styr på spesifikke SHA-hasher eller versjonsnummer.
+- Konsistens på tvers av miljøer: Alle utviklings-, test- og produksjonsmiljøer vil automatisk bruke den nyeste versjonen av applikasjonen når latest-taggen er satt, noe som forenkler distribusjon og vedlikehold.
+- Rask distribusjon: Ved å bruke latest kan man raskt rulle ut oppdateringer til alle miljøer uten å måtte oppdatere tags i flere konfigurasjonsfiler eller systemer.
 
 
 
 #### Container image + SQS URL:
-docker run -e AWS_ACCESS_KEY_ID=xxx -e AWS_SECRET_ACCESS_KEY=yyy -e SQS_QUEUE_URL="https://sqs.eu-west-1.amazonaws.com/244530008913/image-queue_82" jovanaspasenic/java_sqs_client:47892d7 "me on top of a pyramid"
+
+docker run -e AWS_ACCESS_KEY_ID=xxx -e AWS_SECRET_ACCESS_KEY=xxx -e SQS_QUEUE_URL="https://sqs.eu-west-1.amazonaws.com/244530008913/image-queue_82" jovanaspasenic/java_sqs_client:latest "me on top of a pyramid"
+
 
 
 ---
@@ -62,6 +56,7 @@ docker run -e AWS_ACCESS_KEY_ID=xxx -e AWS_SECRET_ACCESS_KEY=yyy -e SQS_QUEUE_UR
 
 - E-postadresse for varslinger --> Angi epost i terraform.tfvars
 - Terraform koden for oppgaven ligger i under mappen infra/alarm_module ??
+- Alarmen er på 1* minutt fordi.......
 
 Instruksjoner:
 1. Kjør 
