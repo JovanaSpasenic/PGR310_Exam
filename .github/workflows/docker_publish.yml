@@ -21,12 +21,13 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Bygg Docker-image med commit SHA som tag
+      # Bygg Docker-image med latest som tag
       - name: Build Docker image
+        working-directory: ./java_sqs_client
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/java_sqs_client:latest .
       
-      # Pushe Docker-image til Docker Hub med commit SHA som tag
+      # Pushe Docker-image til Docker Hub med latest som tag
       - name: Push Docker image to Docker Hub
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/java_sqs_client:latest
