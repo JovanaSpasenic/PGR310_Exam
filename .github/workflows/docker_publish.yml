@@ -14,11 +14,6 @@ jobs:
       - name: Check out the code
         uses: actions/checkout@v2
 
-      # Hent SHA-hash for commit og lagre som miljøvariabel
-      - name: Get Commit SHA
-        id: get_commit
-        run: echo "COMMIT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-
       # Logg inn på Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
@@ -29,9 +24,9 @@ jobs:
       # Bygg Docker-image med commit SHA som tag
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/java_sqs_client:${{ env.COMMIT_SHA }} .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/java_sqs_client:latest .
       
       # Pushe Docker-image til Docker Hub med commit SHA som tag
       - name: Push Docker image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/java_sqs_client:${{ env.COMMIT_SHA }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/java_sqs_client:latest
