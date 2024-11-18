@@ -3,8 +3,8 @@
 # Build the Maven project using Java 17 --> Fra Lab øvingene
 FROM maven:3.8-eclipse-temurin-17 as builder
 WORKDIR /app
-COPY java_sqs_client/pom.xml .
-COPY java_sqs_client/src ./src
+COPY ./pom.xml . 
+COPY ./src ./src
 RUN mvn package
 
 # Use a base image with Java 17 --> Fra Lab øvingene
