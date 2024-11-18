@@ -3,7 +3,7 @@ name: Publish Docker Image to Docker Hub
 on:
   push:
     branches:
-      - main  # Kjør workflowen på push til main-branchen
+      - main 
 
 jobs:
   build-and-push:
