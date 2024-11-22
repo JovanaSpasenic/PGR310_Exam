@@ -4,3 +4,8 @@ variable "email_address" {
   type        = string
 }
 
+variable "sqs_queue_name" {
+  description = "Navnet på SQS-køen"
+  type        = string
+  default     = "image-queue_82" 
+}

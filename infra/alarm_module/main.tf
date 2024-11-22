@@ -7,20 +7,19 @@ resource "aws_cloudwatch_metric_alarm" "sqs_oldest_message_age_alarm" {
   metric_name         = "ApproximateAgeOfOldestMessage"
   
   dimensions = {
-    QueueName = "image-queue_82"  
+    QueueName = var.sqs_queue_name  
   }
   statistic           = "Maximum"
   period              = 60  # hvert minutt --> måling
-  evaluation_periods  = 2 # Andre gangen betingelsen oppfyles trigges alarmen
-  threshold           = 30  # trigger alarmen hvis den eldste meldingen er 30sekunder 
+  evaluation_periods  = 1 # første gangen betingelsen oppfyles trigges alarmen
+  threshold           = 30  # trigger alarmen hvis den eldste meldingen er 30 sekunder 
   comparison_operator = "GreaterThanThreshold"
   alarm_actions       = [aws_sns_topic.sqs_alarm_topic.arn]
-  ok_actions          = [aws_sns_topic.sqs_alarm_topic.arn]
 }
 
 # SNS topic for varsling
 resource "aws_sns_topic" "sqs_alarm_topic" {
-  name = "sqs-alarm-topic"
+  name = "sqs-alarm-topic-82"
 }
 
 # Abonner e-postadressen på SNS-topicen

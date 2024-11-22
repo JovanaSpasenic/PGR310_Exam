@@ -3,7 +3,7 @@ name: Deploy Lambda with SAM
 on:
   push:
     branches:
-      - main  # Trigger workflow on push to main branch
+      - main 
   workflow_dispatch:
 
 jobs:
