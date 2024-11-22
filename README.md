@@ -162,7 +162,7 @@ Med serverless arkitektur betaler man kun for det faktiske forbruket av ressurse
 
 **Kilder**: 
 - Forelesninger fra DevOps
-- https://www.ibm.com/blog/serverless-vs-microservices/#:~:text=Microservices%20architectures%20are%20often%20less,of%20infrastructure%20and%20other%20resources.
+- https://www.ibm.com/blog/serverless-vs-microservices/#:~:text=Microservices%20architectures%20are%20often%20less,of%20infrastructure%20and%20other%20resources
 - https://www.chaossearch.io/blog/microservices-challenges-and-serverless-log-management
 - https://tristiks.com/blog/serverless-architecture-computing/
 
