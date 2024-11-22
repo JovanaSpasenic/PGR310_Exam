@@ -40,14 +40,16 @@ https://sqs.eu-west-1.amazonaws.com/244530008913/image-queue_82
 
 **Beskrivelse av taggestrategi**:
 
-Jeg har valgt å tagge Docker-imagene med "latest", som representerer den nyeste stabile versjonen av applikasjonen. Denne strategien er valgt for å sikre at alle miljøer alltid bruker den nyeste versjonen av imaget uten behov for å spesifisere en konkret tag.
+Jeg har valgt å tagge Docker-imagene med "latest", som representerer den nyeste stabile versjonen av applikasjonen. Denne strategien er valgt for å sikre at alle miljøer alltid bruker den nyeste versjonen av imaget uten behov for å spesifisere en konkret tag. Det er praktisk å bruke latest i mitt tilfelle for rask distribusjon i et lite prosjekt. Dersom prosjektet hadde vært mer omfattende hadde jeg vurdert å bruke latest kombinert med for eksempel versjonsnummer.
 
 **Fordeler**:
 - **Enkelhet**: Bruken av latest gjør det lettere å administrere bildene, da man alltid refererer til den nyeste versjonen av applikasjonen uten å måtte holde styr på spesifikke versjonsnummer.
 - **Konsistens på tvers av miljøer**: Alle utviklings-, test- og produksjonsmiljøer vil automatisk bruke den nyeste versjonen av applikasjonen når latest-taggen er satt, noe som forenkler distribusjon og vedlikehold.
 - **Rask distribusjon**: Ved å bruke latest kan man raskt rulle ut oppdateringer til alle miljøer uten å måtte oppdatere tags i flere konfigurasjonsfiler eller systemer.
 
-
+**Ulemper**:
+- **Mangel på versjonskontroll"": En ulempe er at det ikke gir noen klar indikasjon på hvilken spesifikk versjon av applikasjonen som er i bruk. Det kan bli vanskelig å vite nøyaktig hva som er installert, noe som kan føre til problemer med feilsøking og reproduksjon av bugs, spesielt i produksjon.
+- **Mindre kontroll over stabile versjoner**: Bruken av latest kan gjøre det vanskelig å isolere og vedlikeholde stabile versjoner, da nye oppdateringer automatisk vil overskrive den gamle.
 
 **Container image + SQS URL**:
 
