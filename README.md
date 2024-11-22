@@ -65,10 +65,10 @@ Jeg har valgt å tagge Docker-imagene med "latest", som representerer den nyeste
 
 ##### For å utløse alarmen kan følgende metoder brukes:
 
+- **Justere terskelverdien (thresold)**:    
+Alarmen trigges når eldste melding i køen er eldre enn verdien satt i threshold. For testing kan denne verdien reduseres til noe lavt for raskere trigging av alarmen. Jeg testet dette ved å sette ```threshold = 5```, og fikk en e-postvarsel om at alarmen ble utløst. Etter testing satte jeg verdien tilbake til en realistisk verdi på 30 sekunder.
 - **Simulere køforsinkelse**:
 Alarmen rekker ikke å utløses fordi Lambda-funksjonen prosesserer meldinger for raskt, og køen tømmes før meldingene blir eldre enn den definerte terskeln, f.eks. 30 sekunder. For å løse dette kan man konfiguerere **Visibilty Timeout** i SQS-køen.  Ved å sette ```visibility_timeout_seconds=60``` gir det en "hvileperiode" i køen, og alarmen kan lettere utløses under testing
-- **Justere terskelverdien (thresold)**: 
-	Alarmen trigges når eldste melding i køen er eldre enn verdien satt i threshold. For testing kan denne verdien reduseres til noe lavt for raskere trigging av alarmen. Jeg testet dette ved å sette ```threshold = 5```, og fikk en e-postvarsel om at alarmen ble utløst. Etter testing satte jeg verdien tilbake til en realistisk verdi på 30 sekunder.
 - **Automatisere meldingssending**:
 Ved å bruke en for-løkke i Bash kan man sende mange meldinger til SQS-køen uten å gjøre det manuelt. Dette skaper en høy belastning som kan hjelpe med å utløse alarmen, selv når terskelen er satt til 30 sekunder. For eksempel:
 
@@ -78,7 +78,7 @@ for i in {1..100}; do
 		done
 ```
 **Resultat**: 
-Under testingen observerte jeg en spike i CloudWatch-alarm grafen for SQS-køen. Alarmen gikk fra status ```OK``` til ```ALARM``` når terskelen ble overskredet. Jeg mottok også en bekreftelse på e-post om at alarmen var utløst.
+Under testingen observerte jeg en spike i CloudWatch grafen for SQS-køen. Alarmen gikk fra status ```OK``` til ```ALARM``` når terskelen ble overskredet. Jeg mottok også en bekreftelse på e-post om at alarmen var utløst.
 	
 Bilde av alarm som er utløst:  
 ![bilde](img/screenshot-oppgave4.png)
@@ -89,8 +89,6 @@ Bilde av alarm som er utløst:
 
 **1. Automatisering og kontinuerlig levering (CI/CD)**: _Hvordan påvirker serverless-arkitektur
 sammenlignet med mikrotjenestearkitektur CI/CD-pipelines, automatisering, og utrullingsstrategier?_
-
-Implementering av DevOps-prinsipper som automatisering og kontinuerlig levering (CI/CD) påvirkes på ulike måter av serverless-arkitektur og mikrotjenestearkitektur, og begge tilnærmingene har sine styrker og svakheter. 
 
 I en serverless-arkitektur, som ofte benytter tjenester som AWS Lambda, forenkles utrullingsprosessen betydelig. Dette skyldes at CI/CD-pipelines kan fokusere på å distribuere små, selvstendige funksjoner uten å måtte håndtere underliggende infrastruktur, siden dette administreres av skyleverandøren. Dette gjør det mulig å rulle ut hyppige og små oppdateringer raskt, med minimal risiko for å påvirke andre deler av systemet. Ved å bruke verktøy som AWS SAM (Serverless Application Model), som fungerer som et rammeverk for å definere og deployere serverless-applikasjoner, kan utviklere håndtere infrastrukturen som kode. Dette sikrer konsistens i prosessene og gjør det enklere å reprodusere miljøer i ulike faser av utviklingen. Samtidig gir plattformen automatisert skalering, noe som eliminerer behovet for manuell justering av ressurser i CI/CD-pipelines.
 
@@ -107,9 +105,9 @@ _Hvordan endres overvåkning, logging og feilsøking når man går fra
 mikrotjenester til en serverless arkitektur? Hvilke utfordringer er spesifikke for observability i en FaaS-
 arkitektur?_
 
-Når man går fra mikrotjenester til en serverless arkitektur, endres tilnærmingen til overvåkning, logging og feilsøking betydelig. I en mikrotjenestearkitektur er hvert individuell tjeneste ofte lett å overvåke og feilsøke på grunn av den sentraliserte infrastrukturen. Mikrotjenester kjøres på dedikerte servere eller containere, og utviklerne har mer kontroll over hvordan applikasjonen kjører, noe som gjør det enklere å bruke tradisjonelle teknikker som loggfiler og serverovervåkning for å oppdage problemer.
+Når man går fra mikrotjenester til en serverless arkitektur, endres tilnærmingen til overvåkning, logging og feilsøking betydelig. I en mikrotjenestearkitektur er hver individuell tjeneste ofte lett å overvåke og feilsøke på grunn av den sentraliserte infrastrukturen. Mikrotjenester kjøres på dedikerte servere eller containere, og utviklerne har mer kontroll over hvordan applikasjonen kjører, noe som gjør det enklere å bruke tradisjonelle teknikker som loggfiler og serverovervåkning for å oppdage problemer.
 
-I en serverless arkitektur, derimot, kjører applikasjonene som små funksjoner som er stateless og ofte distribuert på tvers av flere servere eller skytjenester, noe som gjør det vanskeligere å feilsøke og overvåke. Funksjonene er designet for å være raske og selvstendige, og kan aktiveres på etterspørsel. Dette kan føre til utfordringer som kalles "cold starts" (forsinkelse ved oppstart av funksjonene), og også at feilmeldinger kan være mer fragmenterte. Det er vanskeligere å få innsikt i helheten av systemet, ettersom funksjonene kan oppføre seg forskjellig ved hvert kjør, avhengig av ressursene de får tilgang til og miljøet de kjører i.
+I en serverless arkitektur derimot, kjører applikasjonene som små funksjoner som er stateless og ofte distribuert på tvers av flere servere eller skytjenester, noe som gjør det vanskeligere å feilsøke og overvåke. Funksjonene er designet for å være raske og selvstendige, og kan aktiveres på etterspørsel. Dette kan føre til utfordringer som kalles "cold starts" (forsinkelse ved oppstart av funksjonene), og også at feilmeldinger kan være mer fragmenterte. Det er vanskeligere å få innsikt i helheten av systemet, ettersom funksjonene kan oppføre seg forskjellig ved hver kjøring, avhengig av ressursene de får tilgang til og miljøet de kjører i.
 
 Feilsøking i en serverless arkitektur krever avanserte overvåknings- og logging-verktøy som kan gi innsikt i funksjonenes ytelse, feil og hendelser. Selv om mange cloud-leverandører tilbyr innebygde overvåkningsverktøy som AWS CloudWatch, kan disse verktøyene være utilstrekkelige for mer komplekse bruksområder, og det kan være nødvendig å bruke tredjeparts verktøy for å få mer detaljerte innsikter. Det kan også være utfordrende å spore avhengigheter mellom serverless-funksjoner og eksterne tjenester som API-er eller databaser, noe som krever spesialiserte verktøy for å sikre at eventuelle problemer raskt kan identifiseres og løses.
 
@@ -124,20 +122,18 @@ ressursutnyttelse, og kostnadsoptimalisering i en serverless kontra mikrotjenest
 _Skalerbarhet_  
 En av de mest kjente fordelene med serverless-arkitektur er dens automatiske skalerbarhet. I en serverless-modell, som for eksempel AWS Lambda, skaleres funksjonene automatisk basert på etterspørsel. Det betyr at dersom belastningen på systemet øker, håndteres dette automatisk av plattformen uten at utvikleren må gjøre noen justeringer. Dette gjør serverless ideelt for applikasjoner som har uforutsigbare trafikkmønstre, som for eksempel nettbaserte applikasjoner, event-drevne systemer eller periodiske belastninger som julehandel.
 
-I motsetning til dette krever mikrotjenester en mer manuell tilnærming til skalerbarhet. Selv om det finnes verktøy som Kubernetes og Docker Swarm som kan håndtere automatisk skalering, må utviklerne ofte definere og konfigurere hvordan mikrotjenester skal skalere, hva som utløser skaleringen, og hvordan tjenestene kommuniserer med hverandre når de er skalert. Dette kan være mer komplekst og tidkrevende, spesielt i store applikasjoner med mange mikrotjenester som skal håndtere høy belastning.
+I motsetning til dette krever mikrotjenester en mer manuell tilnærming til skalerbarhet. Selv om det finnes verktøy som for eksempel Kubernetes som kan håndtere automatisk skalering, må utviklerne ofte definere og konfigurere hvordan mikrotjenester skal skalere, hva som utløser skaleringen og hvordan tjenestene kommuniserer med hverandre når de er skalert. Dette kan være mer komplekst og tidkrevende, spesielt i store applikasjoner med mange mikrotjenester som skal håndtere høy belastning.
 
 _Ressursutnyttelse_  
-Serverless arkitektur har en betydelig fordel når det gjelder ressursutnyttelse, da funksjonene kun er aktive når de kjører. Dette betyr at man bare betaler for de ressursene man faktisk bruker, som tid og prosessorkapasitet for hver funksjon som kjøres. Dette kan føre til svært effektiv ressursbruk, spesielt for applikasjoner med varierende belastning. Serverless fungerer også ved at funksjonene er stateless og kjøres kun når de er nødvendige, noe som reduserer behovet for å holde servere oppe og tilgjengelige hele tiden.
+Serverless arkitektur har en betydelig fordel når det gjelder ressursutnyttelse, da funksjonene kun er aktive når de kjører. Dette kan føre til svært effektiv ressursbruk, spesielt for applikasjoner med varierende belastning. Serverless fungerer også ved at funksjonene er stateless og kjøres kun når de er nødvendige, noe som reduserer behovet for å holde servere oppe og tilgjengelige hele tiden.
 
 Mikrotjenester derimot, krever dedikerte ressurser, enten i form av virtuelle maskiner eller containere, som kan føre til lavere ressursutnyttelse i perioder med lav trafikk. Selv om containere kan administreres dynamisk, vil systemet fortsatt bruke ressurser på tjenestene som er tilgjengelige hele tiden, uavhengig av trafikkmønstrene. Dette kan føre til mer statiske og potensielt mindre effektive ressursbruksmodeller, spesielt i perioder med lav belastning.
 
 _Kostnadsoptimalisering_  
 Serverless er kostnadseffektivt ettersom man kun betaler for det man faktisk bruker, i stedet for å betale for ubenyttede ressurser. Dette kan være en stor fordel for applikasjoner med uforutsigbar eller periodisk trafikk, da man slipper å betale for overkapasitet. Serverless kan også redusere administrasjonskostnader, da mye av infrastrukturen håndteres av skyplattformen, slik at utviklingsteamet kan fokusere på kode og funksjonalitet.
-
 En ulempe med serverless kan være at langvarige oppgaver, som for eksempel store dataoperasjoner, kan være dyrere eller vanskeligere å håndtere, da funksjonene kan ha tidsbegrensninger for hvor lenge de kan kjøre. Hvis applikasjonen har veldig høy og konstant trafikk, kan serverless også bli dyrere sammenlignet med mikrotjenester, da antall funksjonskall raskt kan øke kostnadene.
 
 Mikrotjenester kan ha høyere faste kostnader fordi de krever at servere eller containere kjører kontinuerlig, selv når det er lite trafikk. Denne modellen kan være mer kostnadskrevende på lang sikt, spesielt for applikasjoner med jevn eller lav trafikk.
-
 En annen kostnadsrelatert ulempe med mikrotjenester er administrasjon av infrastruktur, som kan innebære både personellkostnader og verktøy for å holde oversikt over tjenester og ressurser. Dette kan være dyrere enn serverless, der mye av infrastrukturen håndteres av skyplattformen.
 
 **4. Eierskap og ansvar**:   
@@ -146,17 +142,17 @@ ytelse, pålitelighet og kostnader ved overgang til en serverless tilnærming sa
 mikrotjeneste-tilnærming?_
 
 _Ytelse_:  
-I en mikrotjeneste-tilnærming er DevOps-teamet ansvarlig for å sikre at hver mikrotjeneste fungerer optimalt. Dette innebærer å overvåke ytelsen til individuelle tjenester, håndtere skalering, og sørge for at kommunikasjonen mellom tjenestene fungerer feilfritt. DevOps-teamet må implementere verktøy for logging, overvåkning og feilsøking på tvers av tjenestene, noe som kan være kompleks og tidkrevende.
+I en mikrotjeneste-tilnærming er DevOps-teamet ansvarlig for å sikre at hver mikrotjeneste fungerer optimalt. Dette innebærer å overvåke ytelsen til individuelle tjenester, håndtere skalering og sørge for at kommunikasjonen mellom tjenestene fungerer feilfritt. DevOps-teamet må implementere verktøy for logging, overvåkning og feilsøking på tvers av tjenestene, noe som kan være kompleks og tidkrevende.
 
-Når man går over til en serverless arkitektur, får DevOps-teamet mindre kontroll over infrastrukturen, ettersom plattformen, som for eksempel AWS Lambda håndterer mye av skalering og tilgjengelighet automatisk. Teamet blir mer fokusert på å optimalisere funksjonene og koden, men må fortsatt overvåke og sikre at disse funksjonene fungerer effektivt, spesielt under høy trafikk eller høy belastning. Serverless plattformer kan tilby innebygde overvåkningsverktøy, men DevOps-teamet må fortsatt sørge for at applikasjonens ytelse ikke blir påvirket av eventuelle flaskehalser i funksjonene eller koden som kjøres.
+Når man går over til en serverless arkitektur, får DevOps-teamet mindre kontroll over infrastrukturen ettersom plattformen, som for eksempel AWS Lambda, håndterer mye av skalering og tilgjengelighet automatisk. Teamet blir mer fokusert på å optimalisere funksjonene og koden, men må fortsatt overvåke og sikre at disse funksjonene fungerer effektivt, spesielt under høy trafikk eller høy belastning. Serverless plattformer kan tilby innebygde overvåkningsverktøy, men DevOps-teamet må fortsatt sørge for at applikasjonens ytelse ikke blir påvirket av eventuelle flaskehalser i funksjonene eller koden som kjøres.
 
 _Pålitelighet_:  
-I en mikrotjeneste arkitektur har DevOps-teamet fullt ansvar for å opprettholde påliteligheten til systemet. Dette innebærer å implementere redundans og feiltoleranse, overvåke statusen til hver mikrotjeneste, og håndtere eventuelle nedetider eller feil. DevOps-teamet må sørge for at hvert enkelt mikrotjeneste fungerer stabilt, og at eventuelle feil eller flaskehalser håndteres effektivt for å unngå systemfeil. De er også ansvarlige for å koordinere tjenestene på tvers av ulike systemer, noe som kan gjøre det utfordrende å sikre høy pålitelighet på tvers av hele applikasjonen.
+I en mikrotjeneste arkitektur har DevOps-teamet fullt ansvar for å opprettholde påliteligheten til systemet. Dette innebærer å implementere redundans og feiltoleranse, overvåke statusen til hver mikrotjeneste, og håndtere eventuelle nedetider eller feil. DevOps-teamet må sørge for at hver enkelt mikrotjeneste fungerer stabilt, og at eventuelle feil eller flaskehalser håndteres effektivt for å unngå systemfeil. De er også ansvarlige for å koordinere tjenestene på tvers av ulike systemer, noe som kan gjøre det utfordrende å sikre høy pålitelighet på tvers av hele applikasjonen.
 
 Når man går over til en serverless arkitektur, blir mye av ansvaret for pålitelighet overlatt til skyplattformen som håndterer infrastrukturen. Serverless plattformer som AWS Lambda har innebygd redundans og feiltoleranse, og håndterer automatisk skalerbarhet og tilgjengelighet. DevOps-teamet får dermed en mer fokusert rolle, som innebærer å sørge for at funksjonene de implementerer, er optimalisert for høy tilgjengelighet og at eventuelle flaskehalser i funksjonene blir identifisert og adressert. Selv om serverless arkitektur kan gi høy pålitelighet, er det fortsatt nødvendig å overvåke applikasjonens ytelse og sørge for at den er tilpasset bruksbehovene.
 
 _Kostnader_:  
-Mikrotjenester innebærer kostnader knyttet til vedlikehold av infrastruktur, som servere, containere og virtuelle maskiner. DevOps-teamet har ansvaret for å administrere kapasiteten og skaleringen av disse ressursene, noe som kan være ressurskrevende, spesielt i perioder med lav eller uforutsigbar trafikk. Hvis tjenestene ikke er riktig konfigurert, kan dette føre til ineffektiv ressursutnyttelse og overflødige kostnader. For å kontrollere kostnadene må teamet kontinuerlig optimalisere kapasitetshåndtering og skalering, samt sikre at ressurser brukes effektivt.
+Mikrotjenester innebærer kostnader knyttet til vedlikehold av infrastruktur som servere, containere og virtuelle maskiner. DevOps-teamet har ansvaret for å administrere kapasiteten og skaleringen av disse ressursene, noe som kan være ressurskrevende spesielt i perioder med lav eller uforutsigbar trafikk. Hvis tjenestene ikke er riktig konfigurert, kan dette føre til ineffektiv ressursutnyttelse og overflødige kostnader. For å kontrollere kostnadene må teamet kontinuerlig optimalisere kapasitetshåndtering og skalering, samt sikre at ressurser brukes effektivt.
 
 Med serverless arkitektur betaler man kun for det faktiske forbruket av ressurser, noe som gir muligheten for kostnadsbesparelser, spesielt for applikasjoner med varierende eller lav trafikk. Dette gir DevOps-teamet en fleksibel kostnadsmodell, da de slipper å håndtere overkapasitet og vedlikeholde infrastrukturen kontinuerlig. Men serverless kan være kostbart for applikasjoner med konstant høy trafikk, da hyppige funksjonskall kan føre til høye kostnader. DevOps-teamet må derfor nøye overvåke bruken og forbruket av serverless-funksjoner for å unngå uforutsette kostnader. I tillegg må de vurdere om det er mer kostnadseffektivt å bruke serverless for langvarige oppgaver eller om det finnes mer hensiktsmessige alternativer.
 
