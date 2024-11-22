@@ -40,7 +40,7 @@ https://sqs.eu-west-1.amazonaws.com/244530008913/image-queue_82
 
 **Beskrivelse av taggestrategi**:
 
-Jeg har valgt å tagge Docker-imagene med "latest", som representerer den nyeste stabile versjonen av applikasjonen. Denne strategien er valgt for å sikre at alle miljøer alltid bruker den nyeste versjonen av imaget uten behov for å spesifisere en konkret tag. Det er praktisk å bruke latest i mitt tilfelle for rask distribusjon i et lite prosjekt. Dersom prosjektet hadde vært mer omfattende hadde jeg vurdert å bruke latest kombinert med for eksempel versjonsnummer.
+Jeg har valgt å tagge Docker-imagene med "latest", som representerer den nyeste stabile versjonen av applikasjonen. Denne strategien forenkler administrasjonen ved å sikre at applikasjonen alltid bruker den nyeste versjonen uten at det er nødvendig å spesifisere en konkret tag. Denne tilnærmingen er hensiktsmessig for dette prosjektet, men i et større prosjekt kunne det vært fordelaktig å kombinere "latest" med versjonsnummer for bedre kontroll og versjonsstyring.
 
 **Fordeler**:
 - **Enkelhet**: Bruken av latest gjør det lettere å administrere bildene, da man alltid refererer til den nyeste versjonen av applikasjonen uten å måtte holde styr på spesifikke versjonsnummer.
