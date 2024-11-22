@@ -48,7 +48,7 @@ Jeg har valgt å tagge Docker-imagene med "latest", som representerer den nyeste
 - **Rask distribusjon**: Ved å bruke latest kan man raskt rulle ut oppdateringer til alle miljøer uten å måtte oppdatere tags i flere konfigurasjonsfiler eller systemer.
 
 **Ulemper**:
-- **Mangel på versjonskontroll"": En ulempe er at det ikke gir noen klar indikasjon på hvilken spesifikk versjon av applikasjonen som er i bruk. Det kan bli vanskelig å vite nøyaktig hva som er installert, noe som kan føre til problemer med feilsøking og reproduksjon av bugs, spesielt i produksjon.
+- **Mangel på versjonskontroll**: En ulempe er at det ikke gir noen klar indikasjon på hvilken spesifikk versjon av applikasjonen som er i bruk. Det kan bli vanskelig å vite nøyaktig hva som er installert, noe som kan føre til problemer med feilsøking og reproduksjon av bugs, spesielt i produksjon.
 - **Mindre kontroll over stabile versjoner**: Bruken av latest kan gjøre det vanskelig å isolere og vedlikeholde stabile versjoner, da nye oppdateringer automatisk vil overskrive den gamle.
 
 **Container image + SQS URL**:
