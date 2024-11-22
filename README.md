@@ -25,10 +25,10 @@ https://github.com/JovanaSpasenic/PGR310_Exam/actions/runs/11900222819
 
 ### OPPGAVE 2 A og B
 
-**Lenke til Github Actions Workflow (main)**:
+**Lenke til Github Actions Workflow (main)**:   
 https://github.com/JovanaSpasenic/PGR310_Exam/actions/runs/11900222818
 
-**Lenke til Github Actions Workflow (Ikke main)**:
+**Lenke til Github Actions Workflow (Ikke main)**:    
 https://github.com/JovanaSpasenic/PGR310_Exam/actions/runs/11823989179
 
 **Lenke til SQS-kø**:  
