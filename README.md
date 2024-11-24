@@ -60,7 +60,8 @@ Jeg har valgt å tagge Docker-imagene med "latest", som representerer den nyeste
 
 ### OPPGAVE 4
 
-- E-postadresse for varslinger -> Angi epost i ```terraform.tfvars```
+- E-postadresse for varslinger -> Jeg har skrevet min epost i ```terraform.tfvars``` og lagt til i gitignore
+- For testing kan du eventuelt lage terraform.tfvars fil og legge til epost, eller i variables.tf som "default"
 
 
 ##### For å utløse alarmen kan følgende metoder brukes:
