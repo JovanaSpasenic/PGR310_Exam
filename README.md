@@ -160,6 +160,8 @@ Mikrotjenester innebærer kostnader knyttet til vedlikehold av infrastruktur som
 
 Med serverless arkitektur betaler man kun for det faktiske forbruket av ressurser, noe som gir muligheten for kostnadsbesparelser, spesielt for applikasjoner med varierende eller lav trafikk. Dette gir DevOps-teamet en fleksibel kostnadsmodell, da de slipper å håndtere overkapasitet og vedlikeholde infrastrukturen kontinuerlig. Men serverless kan være kostbart for applikasjoner med konstant høy trafikk, da hyppige funksjonskall kan føre til høye kostnader. DevOps-teamet må derfor nøye overvåke bruken og forbruket av serverless-funksjoner for å unngå uforutsette kostnader. I tillegg må de vurdere om det er mer kostnadseffektivt å bruke serverless for langvarige oppgaver eller om det finnes mer hensiktsmessige alternativer.
 
+**Oppsummering**:        
+Valget mellom serverless og mikrotjenester avhenger av hva slags system man skal utvikle. Serverless passer godt for løsninger med uforutsigbar eller sporadisk belastning, da det tilbyr raskt oppsett, automatisk skalering og kostnadseffektivitet. Mikrotjenester derimot, gir større fleksibilitet og kontroll over komplekse systemer med omfattende forretningslogikk, men krever mer ressurser og vedlikehold.
 
 
 **Kilder**: 
