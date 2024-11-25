@@ -40,16 +40,19 @@ https://sqs.eu-west-1.amazonaws.com/244530008913/image-queue_82
 
 **Beskrivelse av taggestrategi**:
 
-Jeg har valgt å tagge Docker-imagene med "latest", som representerer den nyeste stabile versjonen av applikasjonen. Denne strategien forenkler administrasjonen ved å sikre at applikasjonen alltid bruker den nyeste versjonen uten at det er nødvendig å spesifisere en konkret tag. Denne tilnærmingen er hensiktsmessig for dette prosjektet, men i et større prosjekt kunne det vært fordelaktig å kombinere "latest" med versjonsnummer for bedre kontroll og versjonsstyring.
+Jeg har valgt å kombinere latest-taggen og commit-SHA-tag som en del av min taggestrategi for container-imagene. Denne tilnærmingen balanserer fleksibilitet og stabilitet ved å tilby en enkel løsning for testing samtidig som den sikrer sporbarhet og kontroll i produksjonsmiljøer.  
 
-**Fordeler**:
-- **Enkelhet**: Bruken av latest gjør det lettere å administrere bildene, da man alltid refererer til den nyeste versjonen av applikasjonen uten å måtte holde styr på spesifikke versjonsnummer.
-- **Konsistens på tvers av miljøer**: Alle utviklings-, test- og produksjonsmiljøer vil automatisk bruke den nyeste versjonen av applikasjonen når latest-taggen er satt, noe som forenkler distribusjon og vedlikehold.
-- **Rask distribusjon**: Ved å bruke latest kan man raskt rulle ut oppdateringer til alle miljøer uten å måtte oppdatere tags i flere konfigurasjonsfiler eller systemer.
+- ```latest```             
+Denne taggen gjør det enkelt å alltid bruke det nyeste bildet, noe som er effektivt for utvikling og testing. Teamet slipper å spesifisere en spesifikk versjon, noe som sparer tid og sikrer at man jobber med den nyeste koden.
 
-**Ulemper**:
-- **Mangel på versjonskontroll**: En ulempe er at det ikke gir noen klar indikasjon på hvilken spesifikk versjon av applikasjonen som er i bruk. Det kan bli vanskelig å vite nøyaktig hva som er installert, noe som kan føre til problemer med feilsøking og reproduksjon av bugs, spesielt i produksjon.
-- **Mindre kontroll over stabile versjoner**: Bruken av latest kan gjøre det vanskelig å isolere og vedlikeholde stabile versjoner, da nye oppdateringer automatisk vil overskrive den gamle.
+- ```Commit-SHA-tag```                               
+SHA-tagger gir unik identifikasjon for hvert bilde, noe som er kritisk for sporbarhet og feilsøking. I produksjonsmiljøer gir dette sikkerhet ved å tillate deploy til spesifikke versjoner og rollback ved feil, noe som reduserer risikoen for uventede endringer.
+  
+
+
+**Container image**:         
+
+```jovanaspasenic/java_sqs_client```
 
 **Container image + SQS URL**:
 
@@ -157,6 +160,8 @@ Mikrotjenester innebærer kostnader knyttet til vedlikehold av infrastruktur som
 
 Med serverless arkitektur betaler man kun for det faktiske forbruket av ressurser, noe som gir muligheten for kostnadsbesparelser, spesielt for applikasjoner med varierende eller lav trafikk. Dette gir DevOps-teamet en fleksibel kostnadsmodell, da de slipper å håndtere overkapasitet og vedlikeholde infrastrukturen kontinuerlig. Men serverless kan være kostbart for applikasjoner med konstant høy trafikk, da hyppige funksjonskall kan føre til høye kostnader. DevOps-teamet må derfor nøye overvåke bruken og forbruket av serverless-funksjoner for å unngå uforutsette kostnader. I tillegg må de vurdere om det er mer kostnadseffektivt å bruke serverless for langvarige oppgaver eller om det finnes mer hensiktsmessige alternativer.
 
+**Oppsummering**:        
+Valget mellom serverless og mikrotjenester avhenger av hva slags system man skal utvikle. Serverless passer godt for løsninger med uforutsigbar eller sporadisk belastning, da det tilbyr raskt oppsett, automatisk skalering og kostnadseffektivitet. Mikrotjenester derimot, gir større fleksibilitet og kontroll over komplekse systemer med omfattende forretningslogikk, men krever mer ressurser og vedlikehold.
 
 
 **Kilder**: 
