@@ -42,10 +42,13 @@ https://sqs.eu-west-1.amazonaws.com/244530008913/image-queue_82
 
 Jeg har valgt å kombinere latest-taggen og commit-SHA-tag som en del av min taggestrategi for container-imagene. Denne tilnærmingen balanserer fleksibilitet og stabilitet ved å tilby en enkel løsning for testing samtidig som den sikrer sporbarhet og kontroll i produksjonsmiljøer.  
 
-- ```latest```:              
+- ```latest```             
 Denne taggen gjør det enkelt å alltid bruke det nyeste bildet, noe som er effektivt for utvikling og testing. Teamet slipper å spesifisere en spesifikk versjon, noe som sparer tid og sikrer at man jobber med den nyeste koden.
--```Commit-SHA-tag```:                   
+
+- ```Commit-SHA-tag```                               
 SHA-tagger gir unik identifikasjon for hvert bilde, noe som er kritisk for sporbarhet og feilsøking. I produksjonsmiljøer gir dette sikkerhet ved å tillate deploy til spesifikke versjoner og rollback ved feil, noe som reduserer risikoen for uventede endringer.
+  
+
 
 **Container image**:         
 
